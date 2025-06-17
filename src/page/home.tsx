@@ -29,12 +29,25 @@ function Home() {
 	};
 
 	const calcularSensacaoTermica = () => {
-		const sensacaoTermica =
-			temperatura +
-			0.6215 * temperatura -
-			11.37 * Math.pow(velocidadeVento, 0.16) +
-			0.3965 * temperatura * Math.pow(velocidadeVento, 0.16);
-		setResultado(sensacaoTermica);
+		// Verificar em qual faixa de temperatura estamos
+		if (temperatura <= 10) {
+			// Para temperaturas baixas (≤ 10°C): usar Wind Chill
+			// Fórmula adaptada para Celsius
+			const sensacaoTermica = 13.12 + 0.6215 * temperatura - 11.66 * Math.pow(velocidadeVento, 0.16);
+			setResultado(sensacaoTermica);
+		} else if (temperatura >= 27) {
+			// Para temperaturas altas (≥ 27°C): usar aproximação de refrescamento
+			// O vento causa sensação de resfriamento
+			const fatorVento = Math.pow(velocidadeVento, 0.5) * 0.3; // Fator de resfriamento
+			const sensacaoTermica = temperatura - fatorVento;
+			setResultado(sensacaoTermica);
+		} else {
+			// Para temperaturas intermediárias (10°C - 27°C): fórmula suavizada
+			// Vento causa leve refrescamento
+			const fatorVento = Math.pow(velocidadeVento, 0.4) * 0.2;
+			const sensacaoTermica = temperatura - fatorVento;
+			setResultado(sensacaoTermica);
+		}
 	};
 
 	useEffect(() => {
