@@ -81,6 +81,7 @@ function Home() {
 					<Input
 						placeholder="Temperatura do ar (°C)"
 						value={temperatura}
+						type="number"
 						onChange={handleTemperaturaChange}
 					/>
 
@@ -90,6 +91,7 @@ function Home() {
 					<Input
 						placeholder="Velocidade do vento (km/h)"
 						value={velocidadeVento}
+						type="number"
 						onChange={handleVentoChange}
 					/>
 
@@ -98,12 +100,12 @@ function Home() {
 						onClick={calcularSensacaoTermica}
 						disabled={!temperatura || !velocidadeVento}
 					>
-						Calcular
+						Calculate
 					</Button>
 
 					{resultado !== null && (
 						<Text fontSize="lg" color="blue.500">
-							Sensação Térmica: {resultado.toFixed(2)}°C
+							Thermal sensation: {resultado.toFixed(2)}°C
 						</Text>
 					)}
 				</VStack>
